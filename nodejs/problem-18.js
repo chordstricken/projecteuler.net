@@ -61,29 +61,3 @@ var max = arr.reverse().reduce(function(prev, row) {
 }, []);
 
 console.log(max);
-
-
-
-
-
-
-/*
-while (arr.length !== 1) {
-  var len = arr.length;
-  var row = [];
-  var current = arr[len-2];
-  var currentLen = current.length - 1;
-  var end = arr[len-1];
-
-  for ( var i = 0; i <= currentLen; i++ ) {
-    row.push(Math.max(current[i] + end[i] || 0, current[i] + end[i+1] || 0) )
-  }
-  console.log(row);
-  arr.pop();
-  arr.pop();
-
-  arr.push(row);
-}
-
-console.log(arr);
-*/
