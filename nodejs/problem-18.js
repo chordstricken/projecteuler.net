@@ -52,7 +52,6 @@ var arr = [
 // iterate over the pyramid from the ground up
 var max = arr.reverse().reduce(function(prev, row) {
     if (!prev.length) return row; // for the first row, skip it
-    // if (row.length === 1) return row[0][0];
 
     return row.map(function(val, i) {
         return val + Math.max(prev[i], prev[i + 1]);
