@@ -15,14 +15,57 @@ sum of two abundant numbers is less than this limit.
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 */
 
-function getDivisorSum(n) {
-    var divisors = [];
-    for (mod = 2; mod < n; mod++) {
-        if (n % mod === 0) divisors.push(mod);
-    }
-    return divisors.reduce(function(total, curr) {
-        return total += curr;
-    }, 0);
+
+var Primes = require('primes');
+
+var max = 28123;
+var abun = [];
+
+// converts a string to an integer
+function intval(value) {
+    return parseInt(value);
 }
 
-var numbers = [];
+// Creates a hash map of prime numbers and other obvious deficients
+var skipMap = Primes(max).reduce(function(map, num) {
+    map[num] = 1;
+    return map;
+}, {});
+
+// creates a hashmap of abundant numbers
+var abun = {};
+for (var n = 12; n <= max; n++) {
+    if (skipMap[n] === 1) continue;
+    if (abun[n] === 1) continue; // already calculated
+
+    var dSum = 1,
+        nLimit = Math.ceil(n / 2) + 1;
+
+    for (var mod = 2; mod <= nLimit; mod++)
+        if (n % mod === 0)
+            dSum += mod;
+
+    if (n < dSum) {
+        abun[n] = 1;
+
+        // Every multiple of an abundant number is abundant.
+        for (var n2 = n; n2 < max; n2 += n)
+            abun[n2] = 1;
+    }
+
+}
+delete skipMap; // clear some memory
+
+abun = Object.keys(abun).map(intval); // convert the abundant hashmap into a flat array
+
+// iterate through all 2-sum abundants
+var abundantSums = {}, l, r;
+for (l = 0; l < abun.length; l++)
+    for (r = l; r < abun.length; r++)
+        abundantSums[abun[l] + abun[r]] = 1;
+
+var resultSum = 0, i;
+for (i = 0; i <= max; i++)
+    resultSum += abundantSums[i] === undefined ? i : 0;
+
+console.log(resultSum);
