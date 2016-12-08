@@ -20,8 +20,8 @@ var pandigitalNumbers = {},
     resultTotal = 0;
 
 
-for (var a = 1; a < 100; a++) {
-    for (var b = 100; b < 10000; b++) {
+for (var a = 1; a < 50; a++) {
+    for (var b = 100; b < 2000; b++) {
         var product = a * b;
         if (pandigitalNumbers[product] === undefined && isPandigital(a, b, product)) {
             pandigitalNumbers[product] = true;
